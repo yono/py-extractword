@@ -1,0 +1,26 @@
+extractword
+
+日本語文を単語に分解する。
+接頭詞・接尾語を連結して一つの単語として扱う
+
+Required
+- MeCab
+- mecab-python
+
+Usage
+
+>>> from extractword import *
+>>> sentence = Sentence()
+>>> sentence.analysis_text(u"第二次世界大戦について")
+>>> words = sentence.get_words()
+>>> for word in words:
+...     print word
+... 
+第二次
+世界
+大戦
+について
+
+Install
+% python setup.py build
+% sudo python setup.py install
