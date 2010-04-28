@@ -14,8 +14,7 @@ class Word(object):
         return self.feature.startswith(u'接頭詞')
 
     def is_postfix(self):
-        postfix = self.feature.split(',')[1]
-        return postfix == u'接尾'
+        return self.feature.split(',')[1] == u'接尾'
 
     def is_pp_particle(self):
         return self.feature.startswith(u'助詞')
@@ -48,12 +47,16 @@ class Sentence(object):
 
             words.append(Word(unicode(res.surface),unicode(res.feature)))
 
+            rules = []
+            rules.append(words[BEFORE].is_prefix())
+            rules.append(words[CURRENT].is_postfix())
+            rules.append(words[BEFORE].is_pp_particle() and \
+                         words[CURRENT].is_pp_particle())
+
             if len(words) > 1:
-                if words[BEFORE].is_prefix() or \
-                   words[CURRENT].is_postfix() or \
-                   (words[BEFORE].is_pp_particle() and \
-                    words[CURRENT].is_pp_particle()):
-                    self.words[CURRENT].connect = True
+                for rule in rules:
+                    if rule:
+                        self.words[CURRENT].connect = True
 
             res = res.next
 
