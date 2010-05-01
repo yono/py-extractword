@@ -47,13 +47,13 @@ class Sentence(object):
 
             words.append(Word(unicode(res.surface),unicode(res.feature)))
 
-            rules = []
-            rules.append(words[BEFORE].is_prefix())
-            rules.append(words[CURRENT].is_postfix())
-            rules.append(words[BEFORE].is_pp_particle() and \
-                         words[CURRENT].is_pp_particle())
-
             if len(words) > 1:
+                rules = []
+                rules.append(words[BEFORE].is_prefix())
+                rules.append(words[CURRENT].is_postfix())
+                rules.append(words[BEFORE].is_pp_particle() and \
+                             words[CURRENT].is_pp_particle())
+
                 for rule in rules:
                     if rule:
                         self.words[CURRENT].connect = True
