@@ -3,13 +3,14 @@
 import re
 import MeCab
 
+
 class Word(object):
-    
-    def __init__(self,surface,feature,connect=False):
+
+    def __init__(self, surface, feature, connect=False):
         self.surface = surface
         self.feature = feature
         self.connect = connect
-    
+
     def is_prefix(self):
         return self.feature.startswith(u'接頭詞')
 
@@ -18,6 +19,7 @@ class Word(object):
 
     def is_pp_particle(self):
         return self.feature.startswith(u'助詞')
+
 
 class Sentence(object):
 
@@ -35,17 +37,17 @@ class Sentence(object):
                 result.append(word.surface)
         return result
 
-    def analysis_text(self,text):
+    def analysis_text(self, text):
         words = self.words
         CURRENT = -1
-        BEFORE  = -2
+        BEFORE = -2
         res = self.mecab.parseToNode(text.encode("utf-8"))
         while res:
             if res.surface == '':
                 res = res.next
                 continue
 
-            words.append(Word(unicode(res.surface),unicode(res.feature)))
+            words.append(Word(unicode(res.surface), unicode(res.feature)))
 
             if len(words) > 1:
                 rules = []
